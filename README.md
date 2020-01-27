@@ -10,7 +10,9 @@
 ![image info](./evidencia/1.png)
 
 ###### Secuencia de NO mutante: ["ATGCGA", "CAGTGC", "TTATTT", "AGACGG", "GCGTCA", "TCACTG"]
-En app.js comentarear la linea de mutante: let adn = ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"];
+En app.js comentarear la linea de mutante: let adn = ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA","TCACTG"];
+
+
 ![image info](./evidencia/2.png)
 
 # Ejercicio 2 y 3
@@ -38,6 +40,7 @@ En base de datos:
 ## Proyecto:
 1) Clonar el proyecto
 2) Por consola ir a @usuario:cd ~/MB/MB_Ejercicio_2_3
+2) instalar node_modules con npm install
 3) correr npm start (se dejan los node_modules en el proyecto aunque es recomendable no hacerlo, lo que se tendría que hacer es primero correr npm install siempre y cuando se tenga el archivo package.json con las dependencias correspondientes)
 ##### Se verá lo siguiente:
 ![image info](./evidencia/5.png)
@@ -85,20 +88,23 @@ body: {
 
 ## Docker:
 1) Posicionarse en el directorio de Docker: cd ~/MB/MB_Ejercicio_2_3/docker
-2) Correr el comando: ~/MB/MB_Ejercicio_2_3/docker$ sh docker-deploy-local.sh <tag>
-3) Correr el comando: ~/MB/MB_Ejercicio_2_3/docker$ sh docker-push.sh tag <tag>
+2) Correr el comando: ~/MB/MB_Ejercicio_2_3/docker$ sh docker-deploy-local.sh tag
+3) Correr el comando: ~/MB/MB_Ejercicio_2_3/docker$ sh docker-push.sh tag tag
 Con estos dos pasos primero se subió el proyecto a Docker local y segundo a la registry
-4) Entrar al server de docker: sudo ssh <usuario>@<servidor>
+4) Entrar al server de docker: sudo ssh usuario@servidor
 Suponiendo que ya existe una imagen (sino pasar al paso 8)
 5) Detener el container anterior: docker stop apimutante
 6) Eliminar el container: docker rm apimutante
-7) Eliminar la imagen (en caso de que se quiera borrar): docker rmi dockerRegistry/apimutante:<tag>
-8) Levantar el container: docker run -d --restart=always --name apimutante -p 3679:80 dockerRegistry/apimutante:<tag>
+7) Eliminar la imagen (en caso de que se quiera borrar): docker rmi dockerRegistry/apimutante:tag
+8) Levantar el container: docker run -d --restart=always --name apimutante -p 3679:80 dockerRegistry/apimutante:tag
 
-##### API get:
+## API get:
 #### API get todos los mutantes (/api/getmutantes):
 ![image info](./evidencia/10.png)
 
-#### API get un mutante por ID de mongo(/api/getunmutante/<idmongo>):
+#### API get un mutante por ID de mongo(/api/getunmutante/idmongo):
 ![image info](./evidencia/11.png)
+
+#### API ratio (/api/stats):
+![image info](./evidencia/12.png)
 
