@@ -4,7 +4,7 @@ let Mutante = require('../models/mutanteModel');
 let algoritmo = require('./algoritmoMutante.js');
 
 let matrizApi = [];
-let jsonRatio = {};
+let ratio = 0;
 
 //Obtener un solo mutante (pasarle el id de Mongo)
 function getUnMutante(req, res) {
@@ -33,6 +33,31 @@ async function getMutantes(req, res) {
                 res.status(404).send({ message: 'No hay mutantes' });
             } else {
                 res.status(200).send({ mutantes });
+            }
+        }
+    });
+}
+
+//Ratio
+async function getStats(req, res) {
+    await Mutante.find({}).sort('_id').exec((err, mutantes) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al devolver los mutantes' });
+        } else {
+            if (!mutantes) {
+                res.status(404).send({ message: 'No hay mutantes' });
+            } else {
+                let humano = 0;
+                let mutante = 0;
+                for (let i = 0; i <= mutantes.length - 1; i++) {
+                    if (mutantes[i].adn == "") {
+                        humano = humano + 1
+                    } else {
+                        mutante = mutante + 1
+                    }
+                }
+                ratio = mutante / humano;
+                res.status(200).send({ message: 'Humanos: ' + humano + ', Mutantes: ' + mutante + ', Ratio: ' + ratio });
             }
         }
     });
@@ -73,5 +98,6 @@ function guardarMutante(req, res) {
 module.exports = {
     getUnMutante,
     getMutantes,
-    guardarMutante
+    guardarMutante,
+    getStats
 }
